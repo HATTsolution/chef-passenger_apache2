@@ -52,6 +52,7 @@ end
 
 rvm_shell "passenger_module" do
   code 'passenger-install-apache2-module --auto'
+  ruby_string node[:passenger][:ruby_string]
   user node[:passenger][:user]
   creates node[:passenger][:module_path]
 end
