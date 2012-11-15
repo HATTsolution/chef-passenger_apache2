@@ -1,3 +1,4 @@
+default[:passenger][:user] = `whoami`
 default[:passenger][:version]     = "3.0.11"
 default[:passenger][:max_pool_size] = "6"
 default[:passenger][:root_path]   = "#{languages[:ruby][:gems_dir]}/gems/passenger-#{passenger[:version]}"

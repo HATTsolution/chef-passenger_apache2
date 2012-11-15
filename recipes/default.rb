@@ -47,6 +47,7 @@ end
 
 rvm_gem "passenger" do
   version node[:passenger][:version]
+  user node[:passenger][:user]
 end
 
 rvm_shell "passenger_module" do
