@@ -22,27 +22,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "apache2"
-include_recipe "build-essential"
+include_recipe 'apache2'
 
-case node[:platform]
-when "arch"
-  package "apache"
-when "centos","redhat"
-  package "httpd-devel"
-  if node['platform_version'].to_f < 6.0
-    package 'curl-devel'
-  else
-    package 'libcurl-devel'
-    package 'openssl-devel'
-    package 'zlib-devel'
-  end
+case node['passenger']['install_method']
+when 'source'
+  include_recipe 'passenger_apache2::source'
+when 'package'
+  include_recipe 'passenger_apache2::package'
 else
-  %w{ apache2-prefork-dev libapr1-dev libcurl4-gnutls-dev }.each do |pkg|
-    package pkg do
-      action :upgrade
-    end
-  end
+  raise "Unsupported passenger installation method requested: #{node['passenger']['install_method']}. Supported: source or package."
 end
 
 rvm_gem "passenger" do
